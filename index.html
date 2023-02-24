@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Blog Api</title>
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--JavaScript -->
+        <script defer src="js/bootstrap.bundle.min.js"></script>
+        <script defer src="js/main.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="my-5 text-center">Fake Blog</h1>
+            <!-- Listado de artículos -->
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="listado-articulos"></div>
+            <!-- Contenedor de artículo -->
+            <!--<div class="" id="container-articulo">
+                <h2 id="titulo-articulo"></h2>
+                <p id="cuerpo-articulo"></p>
+                <button id="volver">Volver al Blog</button>
+            </div> -->
+            <!-- Marcador para paginador infinito -->
+            <div id="marcador" style="min-height: 1px">
+                <!-- | Loading |-->
+                <template id="loading">
+                    <div class="d-flex justify-content-center align-items-center w-100" style="height: 40rem">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <!-- Plantillas -->
+        <!-- | Card de cada articulo del listado |-->
+        <template id="plantilla-articulo">
+            <div class="col" id="tarjeta-articulo">
+                <div class="card border-success h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-success" id="titulo"></h5>
+                        <p class="card-text" id="resumen"></p>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+    </body>
+</html>
