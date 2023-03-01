@@ -9,9 +9,13 @@ const singleDOM = document.querySelector("#single-blog");
 const singleTitleDOM = document.querySelector("#single-blog__title");
 const singleContentDOM = document.querySelector("#single-blog__content");
 const botonVolverDOM = document.querySelector("#boton-volver");
+const singleComments = document.querySelector("#single-blog__comments");
+// - Comentarios
+const plantillaComentario = document.querySelector("#plantilla-comentarios").content.firstElementChild;
+
 // - Data
 let articulos = [];
-
+let comments = [];
 // - 3 estados : "listado articulos" , "single articulo", "loading"
 let estado = "listado articulos";
 // - Paginado
@@ -25,15 +29,15 @@ const urlAPI = "https://jsonplaceholder.typicode.com/";
 
 function renderizar() {
     // Comprobar estado
-    //--- podemos hacerlo con condicionales o con un switch
-    /*if (estado === "listado articulos") {
-        singleDOM.classList.add("d-none");
-        singleDOM.classList.remove("d-block");
-    }
-    if (estado === "single articulo") {
-        singleDOM.classList.remove("d-none");
-        singleDOM.classList.add("d-block");
-    }*/
+            //--- podemos hacerlo con condicionales o con un switch
+            /*if (estado === "listado articulos") {
+                singleDOM.classList.add("d-none");
+                singleDOM.classList.remove("d-block");
+            }
+            if (estado === "single articulo") {
+                singleDOM.classList.remove("d-none");
+                singleDOM.classList.add("d-block");
+            }*/
     switch (estado) {
         case "listado articulos":
             singleDOM.classList.add("d-none");
@@ -67,6 +71,18 @@ function renderizar() {
         });
         // Insertamos en el listado
         listadoArticulosDOM.appendChild(miTarjetaArticulo);
+    });
+    // Lista de comentarios
+    singleComments.innerHTML = "";
+    comments.forEach(function(comment) {
+        const miComentario = plantillaComentario.cloneNode(true);
+        const tituloComentario = miComentario.querySelector("#comment__title");
+        tituloComentario.textContent = comment.name;
+        const emailComentario = miComentario.querySelector("#comment__email");
+        emailComentario.textContent = comment.email;
+        const cuerpoComentario = miComentario.querySelector("#comment__body");
+        cuerpoComentario.textContent = comment.body;
+        singleComments.appendChild(miComentario);
     });
 
 }
@@ -131,6 +147,11 @@ async function obtenerSingleArticulo(id) {
     // Modificamos el HTML de single
     singleTitleDOM.textContent = json.title;
     singleContentDOM.textContent = json.body;
+    // Obtener comentarios del artículo
+    const miFetchComments = await fetch(`${urlAPI}posts/${id}/comments`);
+    // Transforma la respuesta en json
+    comments = await miFetchComments.json();
+
     // Al terminar de cargar los datos, quitamos loading y cambiamos de estado
     cambiarEstado("single articulo");
 }
